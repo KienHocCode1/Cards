@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 public class DeckOfCards {
     private Card[] cards;
@@ -43,8 +44,9 @@ public class DeckOfCards {
             Card temp = cards[i];
             cards[i] = cards[j];
             cards[j] = temp;
-            System.out.print(cards[i] + " ");
+            //System.out.print(cards[i] + " ");
         }
+        Arrays.stream(cards).forEach(c -> System.out.print(c+ " "));
     }
     public Card[] dealTopCards(int numCards) {
         Card[] hand = new Card[numCards];
