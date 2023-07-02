@@ -20,8 +20,9 @@ public class Main {
             System.out.println("1=shuffle, 2=deal 1 hand, 3=deal 100000 times, 4=quit");
             int choice = input.nextInt();
             if (choice == 1) {
-                System.out.println(a);
                 a.shuffle();
+                System.out.println("");
+                System.out.println(a);
                 System.out.println("Cards are shuffled.");
 
             } else if (choice == 2) {
