@@ -1,13 +1,11 @@
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
 public class DeckOfCards {
     private Card[] cards;
     private int sizeOfTheDeck;
     private final int rankMax;
     private final int suitNumber;
-    private Card[] topCard;
-
-
     public DeckOfCards(int rankMax, int suitNumber) {
         this.rankMax = rankMax;
         this.suitNumber = suitNumber;
@@ -21,7 +19,6 @@ public class DeckOfCards {
                 insertCards++;
             }
         }
-
     }
 
     public int getSizeOfTheDeck() {
@@ -44,37 +41,86 @@ public class DeckOfCards {
             Card temp = cards[i];
             cards[i] = cards[j];
             cards[j] = temp;
-            //System.out.print(cards[i] + " ");
         }
-        Arrays.stream(cards).forEach(c -> System.out.print(c+ " "));
+        for (Card card : cards) {
+            System.out.print(card + " ");
+        }
     }
     public Card[] dealTopCards(int numCards) {
         Card[] hand = new Card[numCards];
-
         for (int i = 0; i < numCards; i++) {
             hand[i] = cards[i];
         }
-
+        for (Card card : hand) {
+            System.out.print(card + " ");
+        }
         return hand;
     }
     public Card getTopCard() {
         return cards[0];
     }
-    static void printCards(Card[] cards) {
+    public int[] histogram(int shuffle100000) {
+        int big = 0;
+        int small = 0;
+
+        // Sort the cards in ascending order based on their values
+        Arrays.sort(cards, Comparator.comparingInt(Card::getValue));
+
+        // Add the values of the three smallest cards
+        for (int i = 0; i < shuffle100000; i++) {
+            small += cards[i].getValue();
+        }
+
+        // Add the values of the three biggest cards
+        for (int i = sizeOfTheDeck - 1; i >= sizeOfTheDeck - shuffle100000; i--) {
+            big += cards[i].getValue();
+        }
+        int math = big - small;
+        System.out.println(math);
+        int[] histogramArray = new int[math+1];
+
+        Random random = new Random();
+        for (int i = 0; i < 100000; i++) {
+            int sum = (int) (Math.random() * math);
+            histogramArray[sum]++;
+        }
+
+        for (int i = small; i <= big; i++) {
+            System.out.println(i + ": " + histogramArray[i-small]);
+        }
+
+        return histogramArray;
+    }
+
+    public int getTotalValue() {
+        int big = 0;
+        int small = 0;
+
+        // Sort the cards in ascending order based on their values
+        Arrays.sort(cards, Comparator.comparingInt(Card::getValue));
+
+        // Add the values of the three smallest cards
+        for (int i = 0; i < 3; i++) {
+            small += cards[i].getValue();
+        }
+
+        // Add the values of the three biggest cards
+        for (int i = sizeOfTheDeck - 1; i >= sizeOfTheDeck - 3; i--) {
+            big += cards[i].getValue();
+        }
+        int math = big - small;
+        System.out.println(math);
+        return math;
+    }
+    public void print(){
         for (Card card : cards) {
             System.out.print(card + " ");
         }
-        System.out.println();
-    }
-
-    public int[] histogram() {
-
-        return null;
     }
 
     @Override
     public String toString() {
-        return String.format("Size %d MinValue %d MaxValue %d TopCard %s",getSizeOfTheDeck(),getMinValue(), getMaxValue(), getTopCard());
+        return String.format("Size %d MinValue %d MaxValue %d TopCard %s", getSizeOfTheDeck(), getMinValue(), getMaxValue(), getTopCard());
     }
 
 }
