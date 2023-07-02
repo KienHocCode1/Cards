@@ -60,7 +60,7 @@ public class DeckOfCards {
         return cards[0];
     }
     public int[] histogram(int shuffle100000) {
-        int big = 0;
+        int big = 1;
         int small = 0;
 
         // Sort the cards in ascending order based on their values
@@ -81,11 +81,11 @@ public class DeckOfCards {
 
         Random random = new Random();
         for (int i = 0; i < 100000; i++) {
-            int sum = (int) (Math.random() * math);
+            int sum = random.nextInt(math+1);
             histogramArray[sum]++;
         }
 
-        for (int i = small; i <= big; i++) {
+        for (int i = small; i < big; i++) {
             System.out.println(i + ": " + histogramArray[i-small]);
         }
 
